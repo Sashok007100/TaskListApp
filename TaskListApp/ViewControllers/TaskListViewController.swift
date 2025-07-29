@@ -45,15 +45,12 @@ final class TaskListViewController: UITableViewController {
     }
     
     private func save(_ taskName: String) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let task = ToDoTask(context: appDelegate.persistentContainer.viewContext)
-        task.title = taskName
-        taskList.append(task)
+        storageManager.createTask(taskName)
+        taskList = storageManager.fetchTask()
         
         let indexPath = IndexPath(row: taskList.count - 1, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
-        
-        appDelegate.saveContext()
+    }
     }
 }
 
