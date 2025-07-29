@@ -22,18 +22,20 @@ final class TaskListViewController: UITableViewController {
     }
     
     @objc private func addNewTask() {
-        showAlert(with: "New Task", andMessage: "What do you want to do?")
+        showAlert(with: "New Task", andMessage: "What do you want to do?") { [unowned self] name in
+            save(name)
+        }
     }
     
     private func fetchData() {
         taskList = storageManager.fetchTask()
     }
     
-    private func showAlert(with title: String, andMessage message: String) {
+    private func showAlert(with title: String, andMessage message: String, completion: @escaping (String) -> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: "Save Task", style: .default) { [unowned self] _ in
+        let saveAction = UIAlertAction(title: "Save Task", style: .default) { _ in
             guard let taskName = alert.textFields?.first?.text, !taskName.isEmpty else { return }
-            save(taskName)
+            completion(taskName)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
         alert.addAction(saveAction)
