@@ -60,6 +60,10 @@ final class TaskListViewController: UITableViewController {
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
+    private func update(indexPath: IndexPath, newName: String) {
+        storageManager.updateTask(at: taskList[indexPath.row], newName: newName)
+        taskList[indexPath.row].title = newName
+        tableView.reloadData()
     }
 }
 
@@ -85,6 +89,11 @@ extension TaskListViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showAlert(with: "Edit Task", andMessage: "Write a new task name.") { [unowned self] name in
+            update(indexPath: indexPath, newName: name)
+        }
+    }
 }
 
 // MARK: - Setup UI

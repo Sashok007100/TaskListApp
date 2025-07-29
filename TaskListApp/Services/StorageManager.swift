@@ -63,4 +63,8 @@ final class StorageManager {
         saveContext()
     }
     
+    func updateTask(at task: ToDoTask, newName: String) {
+        task.title = newName
+        saveContext()
+    }
 }
