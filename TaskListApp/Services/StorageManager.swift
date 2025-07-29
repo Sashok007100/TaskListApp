@@ -56,4 +56,11 @@ final class StorageManager {
         saveContext()
     }
     
+    func deleteTask(at task: ToDoTask) {
+        let context = persistentContainer.viewContext
+        
+        context.delete(task)
+        saveContext()
+    }
+    
 }

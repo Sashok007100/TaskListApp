@@ -51,6 +51,13 @@ final class TaskListViewController: UITableViewController {
         let indexPath = IndexPath(row: taskList.count - 1, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
+    
+    private func delete(indexPath: IndexPath) {
+        storageManager.deleteTask(at: taskList[indexPath.row])
+        taskList.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
     }
 }
 
@@ -69,6 +76,13 @@ extension TaskListViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            delete(indexPath: indexPath)
+        }
+    }
+    
 }
 
 // MARK: - Setup UI
