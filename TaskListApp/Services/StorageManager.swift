@@ -35,4 +35,14 @@ final class StorageManager {
         }
     }
     
+    func fetchTask() -> [ToDoTask] {
+        let fetchRequest = ToDoTask.fetchRequest()
+  
+        do {
+            return try persistentContainer.viewContext.fetch(fetchRequest)
+        } catch {
+            print(error)
+            return []
+        }
+    }
 }

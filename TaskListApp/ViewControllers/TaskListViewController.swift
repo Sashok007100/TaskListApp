@@ -9,6 +9,7 @@ import UIKit
 
 final class TaskListViewController: UITableViewController {
     
+    private let storageManager = StorageManager.shared
     private var taskList: [ToDoTask] = []
     private let cellID = "task"
     
@@ -25,14 +26,7 @@ final class TaskListViewController: UITableViewController {
     }
     
     private func fetchData() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let fetchRequest = ToDoTask.fetchRequest()
-        
-        do {
-            taskList = try appDelegate.persistentContainer.viewContext.fetch(fetchRequest)
-        } catch {
-            print(error)
-        }
+        taskList = storageManager.fetchTask()
     }
     
     private func showAlert(with title: String, andMessage message: String) {
