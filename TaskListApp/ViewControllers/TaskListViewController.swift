@@ -63,7 +63,7 @@ final class TaskListViewController: UITableViewController {
     private func update(indexPath: IndexPath, newName: String) {
         storageManager.updateTask(at: taskList[indexPath.row], newName: newName)
         taskList[indexPath.row].title = newName
-        tableView.reloadData()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
 
