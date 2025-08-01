@@ -11,7 +11,7 @@ import CoreData
 final class StorageManager {
     static let shared = StorageManager()
     
-    lazy var persistentContainer: NSPersistentContainer = {
+    private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "TaskListApp")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
