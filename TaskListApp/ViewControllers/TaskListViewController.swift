@@ -92,6 +92,7 @@ extension TaskListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showAlert(with: "Edit \(taskList[indexPath.row].title ?? "")", andMessage: "Write a new task name.") { [unowned self] name in
             update(indexPath: indexPath, newName: name)
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
 }
