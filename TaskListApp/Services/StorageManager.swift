@@ -11,6 +11,10 @@ import CoreData
 final class StorageManager {
     static let shared = StorageManager()
     
+    private var context: NSManagedObjectContext {
+        persistentContainer.viewContext
+    }
+    
     private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "TaskListApp")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -24,7 +28,6 @@ final class StorageManager {
     private init() {}
     
     func saveContext() {
-        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
@@ -39,7 +42,7 @@ final class StorageManager {
         let fetchRequest = ToDoTask.fetchRequest()
   
         do {
-            return try persistentContainer.viewContext.fetch(fetchRequest)
+            return try context.fetch(fetchRequest)
         } catch {
             print(error)
             return []
@@ -47,8 +50,6 @@ final class StorageManager {
     }
     
     func createTask(_ taskName: String) {
-        let context = persistentContainer.viewContext
-        
         let newTask = ToDoTask(context: context)
         newTask.title = taskName
         
@@ -57,8 +58,6 @@ final class StorageManager {
     }
     
     func deleteTask(at task: ToDoTask) {
-        let context = persistentContainer.viewContext
-        
         context.delete(task)
         saveContext()
     }
